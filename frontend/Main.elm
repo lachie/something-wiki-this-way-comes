@@ -6,6 +6,8 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onInput)
 import Navigation
+import Data exposing (mainThing)
+import Types
 
 main =
     Navigation.program Visit
@@ -16,14 +18,13 @@ main =
     }
 
 type alias Model =
-    { topic : String
-    , history : List Navigation.Location
+    { thing : Types.Thing
     }
 
 
 init : Navigation.Location -> ( Model, Cmd Msg )
 init location =
-  ( Model location.hash [ location ],
+  ( Model Data.mainThing,
   Cmd.none
   )
 
@@ -35,7 +36,7 @@ update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
     case msg of
         Visit location ->
-          ( { model | history = location :: model.history, topic = location.hash }
+          ( { model | thing = Data.mainThing }
           , Cmd.none
           )
 
@@ -50,7 +51,6 @@ viewLocation location =
 view : Model -> Html Msg
 view model =
     div []
-        [ h2 [] [ text model.topic ]
+        [ h2 [] [ text model.thing.name ]
         , viewLink "hello"
-        , ul [] (List.map viewLocation model.history)
         ]

@@ -1,24 +1,19 @@
 module Types exposing (..)
 
-import Set
+import Set exposing(Set(..))
+import WikiTypes as Wiki
 
 
 type alias Thing =
     { name : String
-    , description : String
-    , history : String
-    , remindsMeOF : String
+    , description : Wiki.Text
+    , history : Maybe Wiki.Text
+    , remindsMeOF : Maybe Wiki.Text
     , generalTags : TagSet
     , areaTags : TagSet
     , source : Source
     , area : Area
-    , img : Image
-    }
-
-
-type alias Image =
-    { src : String
-    , description : String
+    , img : Maybe Wiki.Image
     }
 
 
@@ -28,22 +23,22 @@ type alias Area =
 
 
 type Source
-    = Person
-    | Publication
+    = SourcePerson Person
+    | SourceSite Site
 
 
 type alias Person =
     { name : String
-    , blurb : String
-    , twitter : String
-    , img : Image
-    , met : String
+    , blurb : Maybe String
+    , twitter : Maybe String
+    , img : Maybe Wiki.Image
+    , met : Maybe String
     }
 
 
-type alias Publication =
+type alias Site =
     { name : String
-    , url : String
+    , url : Maybe String
     }
 
 
